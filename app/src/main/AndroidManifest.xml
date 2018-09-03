@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.gcappslab.gcorso.letsbookmark">
+
+    <!-- To access Google+ APIs: -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <application
+        android:name="android.support.multidex.MultiDexApplication"
+        android:allowBackup="true"
+        android:icon="@drawable/logo6"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".Activities.AllSitesActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:mimeType="text/plain" />
+            </intent-filter>
+        </activity>
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
+        <activity
+            android:name=".Activities.NewSiteActivity"
+            android:label="@string/title_activity_new_source"
+            android:parentActivityName=".Activities.AllSitesActivity"
+            android:theme="@style/AppTheme">
+
+            <!-- Parent activity meta-data to support API level 7+ -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.gcappslab.gcorso.letsbookmark.Activities.AllSitesActivity" />
+        </activity>
+        <activity
+            android:name=".Activities.SettingsActivity"
+            android:label="@string/title_activity_settings"
+            android:parentActivityName=".Activities.AllSitesActivity">
+
+            <!-- Parent activity meta-data to support API level 7+ -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.gcappslab.gcorso.letsbookmark.Activities.AllSitesActivity" />
+        </activity>
+        <activity
+            android:name=".Activities.SiteInformationActivity"
+            android:label="@string/title_activity_site_information"
+            android:parentActivityName=".Activities.AllSitesActivity"
+            android:theme="@style/AppTheme">
+
+            <!-- Parent activity meta-data to support API level 7+ -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.gcappslab.gcorso.letsbookmark.Activities.AllSitesActivity" />
+        </activity>
+        <activity
+            android:name=".Activities.EditSiteInformationActivity"
+            android:label="@string/title_activity_edit_site_information"
+            android:parentActivityName=".Activities.AllSitesActivity"
+            android:theme="@style/AppTheme">
+
+            <!-- Parent activity meta-data to support API level 7+ -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.gcappslab.gcorso.letsbookmark.Activities.AllSitesActivity" />
+        </activity>
+        <activity
+            android:name=".Activities.NewFolderActivity"
+            android:label="@string/title_activity_add_folder"
+            android:parentActivityName=".Activities.AllSitesActivity">
+
+            <!-- Parent activity meta-data to support API level 7+ -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.gcappslab.gcorso.letsbookmark.Activities.AllSitesActivity" />
+        </activity>
+        <activity
+            android:name=".Activities.FolderSitesActivity"
+            android:label="@string/title_activity_folder_sites"
+            android:parentActivityName=".Activities.AllSitesActivity">
+
+            <!-- Parent activity meta-data to support API level 7+ -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.gcappslab.gcorso.letsbookmark.Activities.AllSitesActivity" />
+        </activity>
+        <activity
+            android:name=".Activities.AboutActivity"
+            android:label="@string/title_activity_about"
+            android:parentActivityName=".Activities.SettingsActivity">
+
+            <!-- Parent activity meta-data to support API level 7+ -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.gcappslab.gcorso.letsbookmark.Activities.SettingsActivity" />
+        </activity>
+        <activity android:name=".Activities.SuggestionsActivity"
+                  android:label="@string/suggestions"
+                  android:parentActivityName=".Activities.AllSitesActivity">
+        <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value="com.gcappslab.gcorso.letsbookmark.Activities.AllSitesActivity" />
+        </activity>
+    </application>
+
+</manifest>

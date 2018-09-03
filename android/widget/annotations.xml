@@ -1,0 +1,6 @@
+<root>
+    <item name='android.widget.RelativeLayout'>
+        <annotation name='org.jetbrains.annotations.NotNull' />
+        <annotation name='java.lang.annotation.Deprecated' />
+    </item>
+</root>

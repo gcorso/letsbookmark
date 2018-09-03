@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".Activities.AboutActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/version">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+
+            <TextView
+                android:text="Let's Bookmark is an application developed by Gabriele Corso from GC Apps Lab. GC Apps Lab is a group of young developers from Milan (Italy). Our apps are free and don’t contain ads or in-app purchases.
+If you like this app, please help us grow by:"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView6"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:textAppearance="?android:attr/textAppearanceListItemSmall"
+                android:textAlignment="textStart" />
+
+            <TextView
+                android:text="@string/visiting_our_website"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView9"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginBottom="15dp"
+                android:textAppearance="?android:attr/textAppearanceListItemSmall"
+                android:textAlignment="center"
+                android:gravity="center_horizontal" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:id="@+id/logogcIV"
+                    android:layout_alignParentTop="true"
+                    android:src="@drawable/logogc"
+                    android:layout_centerHorizontal="true"
+                    android:layout_height="200dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/learn_more"
+                    android:id="@+id/textView"
+                    android:layout_below="@+id/logogcIV"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginRight="8dp"
+                    android:textAppearance="?android:attr/textAppearanceListItemSmall"
+                    android:textAlignment="center" />
+
+                <Button
+                    android:layout_width="65dp"
+                    android:layout_height="65dp"
+                    android:id="@+id/button_google"
+                    android:layout_below="@+id/textView"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="13dp"
+                    android:background="@drawable/gogle_plus_button" />
+
+                <Button
+                    android:layout_width="65dp"
+                    android:layout_height="65dp"
+                    android:id="@+id/button_facebook"
+                    android:background="@drawable/facebook_button"
+                    android:layout_alignBottom="@+id/button_google"
+                    android:layout_toLeftOf="@+id/button_google"
+                    android:layout_toStartOf="@+id/button_google"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp" />
+
+                <Button
+                    android:layout_width="65dp"
+                    android:layout_height="65dp"
+                    android:id="@+id/button_twitter"
+                    android:background="@drawable/twitter_button"
+                    android:layout_alignBottom="@+id/button_google"
+                    android:layout_toRightOf="@+id/button_google"
+                    android:layout_toEndOf="@+id/button_google"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp" />
+
+                <TextView
+                    android:text="@string/discovering_all_our_apps"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tvDiscover"
+                    android:layout_marginTop="20dp"
+                    android:textAppearance="?android:attr/textAppearanceListItemSmall"
+                    android:layout_below="@+id/button_google"
+                    android:gravity="center_horizontal" />
+
+                <Button
+                    android:layout_width="65dp"
+                    android:layout_height="65dp"
+                    android:id="@+id/button_quadros"
+                    android:layout_below="@+id/tvDiscover"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="13dp"
+                    android:background="@drawable/logoq" />
+
+                <Button
+                    android:layout_width="65dp"
+                    android:layout_height="65dp"
+                    android:id="@+id/button_encryptstudio"
+                    android:background="@drawable/logoes"
+                    android:layout_alignBottom="@+id/button_quadros"
+                    android:layout_toLeftOf="@+id/button_quadros"
+                    android:layout_toStartOf="@+id/button_quadros"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp" />
+
+                <Button
+                    android:layout_width="65dp"
+                    android:layout_height="65dp"
+                    android:id="@+id/button_clashofstars"
+                    android:background="@drawable/logocs"
+                    android:layout_alignBottom="@+id/button_quadros"
+                    android:layout_toRightOf="@+id/button_quadros"
+                    android:layout_toEndOf="@+id/button_quadros"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceListItem"
+        android:text="@string/version"
+        android:id="@+id/version"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp" />
+
+</RelativeLayout>

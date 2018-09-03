@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="fullscreen_content_controls" type="id" />
+    <item name="fullscreen_content" type="id" />
+    <item name="dummy_button" type="id" />
+    <item name="my_action_bar_toolbar" type="id">Toolbar</item>
+</resources>

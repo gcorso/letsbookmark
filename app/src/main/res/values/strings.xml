@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Let\'s Bookmark</string>
+    <string name="action_settings">Help &amp; Feedback</string>
+
+    <string name="title_activity_new_source">Add a new bookmark</string>
+    <string name="cancel">Cancel</string>
+    <string name="delete">Delete</string>
+    <string name="yes_delete_them">Yes, delete them</string>
+    <string name="no_keep_them">No, keep them</string>
+
+    <string name="sitename">Name</string>
+    <string name="urlsite">Location</string>
+
+    <string name="add_a_new_site">Add a new bookmark</string>
+    <string name="save">  SAVE  </string>
+    <string name="cancel_site">  CANCEL  </string>
+    <string name="back_to_the_list">Back</string>
+    <string name="title_activity_site_information">Bookmark Info</string>
+    <string name="URL">Location :</string>
+    <string name="name">Name :</string>
+    <string name="tcName">Medium Text</string>
+    <string name="tcURL">Medium Text</string>
+    <string name="edit_this_site">Edit</string>
+    <string name="title_activity_edit_site_information">Edit Bookmark Information</string>
+    <string name="version">Version 1.3</string>
+    <string name="learn_more">Finding us on social networks:</string>
+
+
+    <string name="open_bookmark">Open this bookmark</string>
+    <string name="edit_bookmark">Edit this bookmark</string>
+    <string name="info_bookmark">Bookmark information</string>
+    <string name="delete_bookmark">Delete this bookmark</string>
+    <string name="share_bookmark">Share this bookmark</string>
+    <string name="open_folder">Open this folder</string>
+    <string name="delete_folder">Delete this folder</string>
+    <string name="add_to_a_folder">Add to a folder</string>
+    <string name="title_choose_folder">Select the folder</string>
+    <string name="remove_from_this_folder">Remove from this folder</string>
+
+    <string name="action_new">New</string>
+    <string name="action_share">Share</string>
+    <string name="action_edit">Edit this bookmark</string>
+    <string name="action_delete">Delete this bookmark</string>
+    <string name="action_open">Open this bookmark</string>
+    <string name="action_new_folder">Add a new folder</string>
+    <string name="title_activity_folder_sites">Folder name</string>
+    <string name="title_activity_add_folder">Add a new folder</string>
+    <string name="title_activity_about">About</string>
+    <string name="visiting_our_website">Visiting our website:</string>
+    <string name="discovering_all_our_apps">Discovering all our apps:</string>
+    <string name="votenow">Vote!</string>
+    <string name="notnow">Not now</string>
+
+    <string name="suggestions">Suggestions</string>
+
+
+</resources>

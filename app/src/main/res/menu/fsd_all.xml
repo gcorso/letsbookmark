@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/action_bookmark"
+        android:icon="@drawable/bookmark"
+        android:title="New bookmark" />
+    <item
+        android:id="@+id/action_suggestions"
+        android:icon="@drawable/suggestions"
+        android:title="Suggestions"/>
+    <item
+        android:id="@+id/action_folder"
+        android:icon="@drawable/newfolder"
+        android:title="New folder" />
+</menu>

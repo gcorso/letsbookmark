@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array
+        name="long_list">
+        <item>@string/open_bookmark</item>
+        <item>@string/edit_bookmark</item>
+        <item>@string/info_bookmark</item>
+        <item>@string/share_bookmark</item>
+        <item>@string/delete_bookmark</item>
+        <item>@string/add_to_a_folder</item>
+    </string-array>
+
+    <string-array
+        name="long_folder">
+        <item>@string/open_folder</item>
+        <item>@string/delete_folder</item>
+    </string-array>
+
+    <string-array
+        name="long_list_folder_sites">
+        <item>@string/open_bookmark</item>
+        <item>@string/edit_bookmark</item>
+        <item>@string/info_bookmark</item>
+        <item>@string/share_bookmark</item>
+        <item>@string/delete_bookmark</item>
+        <item>@string/remove_from_this_folder</item>
+    </string-array>
+
+</resources>

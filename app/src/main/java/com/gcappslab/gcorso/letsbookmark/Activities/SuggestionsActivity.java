@@ -62,15 +62,9 @@ public class SuggestionsActivity extends AppCompatActivity {
         listDataChild = new HashMap<String, List<Site>>();
 
         // Adding child data
-        //listDataHeader.add("Top 250");
-        //listDataHeader.add("Now Showing");
-        //listDataHeader.add("Coming Soon..");
-
-        // Adding child data
         List<Site> news = new ArrayList<Site>();
         news.add(new Site("CNN", "http://www.cnn.com/", "http://www.gcappslab.com/suggestions/cnn.png"));
         news.add(new Site("NYTimes", "http://www.nytimes.com/", "http://www.gcappslab.com/suggestions/nytimes.png"));
-        news.add(new Site("Fox News", "http://www.foxnews.com/", "http://www.gcappslab.com/suggestions/foxnews.png"));
         news.add(new Site("NBC News", "http://www.nbcnews.com/", "http://www.gcappslab.com/suggestions/nbcnews.png"));
         news.add(new Site("Washington Post", "http://www.washingtonpost.com/", "http://www.gcappslab.com/suggestions/washingtonpost.png"));
         news.add(new Site("The Guardian", "http://www.theguardian.com/", "http://www.gcappslab.com/suggestions/theguardian.png"));
@@ -78,7 +72,6 @@ public class SuggestionsActivity extends AppCompatActivity {
         news.add(new Site("ABC News", "http://www.abcnews.go.com/", "http://www.gcappslab.com/suggestions/abcnews.png"));
         news.add(new Site("BBC News", "http://www.bbc.co.uk/", "http://www.gcappslab.com/suggestions/bbcnews.png"));
         news.add(new Site("USA Today", "http://www.usatoday.com/", "http://www.gcappslab.com/suggestions/usatoday.png"));
-
 
         List<Site> sport = new ArrayList<Site>();
         sport.add(new Site("ESPN", "http://www.espn.com/", "http://www.gcappslab.com/suggestions/espn.png"));

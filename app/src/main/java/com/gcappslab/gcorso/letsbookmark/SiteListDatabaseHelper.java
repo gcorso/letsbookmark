@@ -6,10 +6,15 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteQueryBuilder;
+import android.util.Log;
 
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.sql.SQLException;
+
+import static com.gcappslab.gcorso.letsbookmark.Const.SEP_I;
+import static com.gcappslab.gcorso.letsbookmark.Const.SEP_II;
+import static com.gcappslab.gcorso.letsbookmark.Const.SEP_III;
 
 /**
  * Created by Alessandro.c on 11/09/2015.
@@ -19,7 +24,6 @@ public class SiteListDatabaseHelper {
     private static final int DATABASE_VERSION = 14;
     private static final String DATABASE_NAME = "bookmarks.db";
     public static final String TABLE_NAME_ALL = "sitelist";
-    public static final String TABLE_NAME_HOME = "homesites";
     public static final String TABLE_NAME_FOLDER = "foldersites";
 
     public static final String ALL_COLUMN_ID = "_id";
@@ -33,31 +37,18 @@ public class SiteListDatabaseHelper {
     public static final String FOLDER_COLUMN_IMAGE = "image";
     public static final String FOLDER_COLUMN_FOLDER_NAME = "namefolder";
 
-    public static final String FTS_COLUMN_NAME = "name";
-    public static final String FTS_COLUMN_URL = "url";
-    public static final String FTS_COLUMN_IMAGE = "image";
-
-
     private static final String SQL_CREATE_TABLE_ALL = "CREATE TABLE " + TABLE_NAME_ALL + "( "
             + ALL_COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + ALL_COLUMN_NAME + " TEXT, "
             + ALL_COLUMN_URL + " TEXT, "
             + ALL_COLUMN_IMAGE + " TEXT )";
 
-       private static final String SQL_CREATE_TABLE_FOLDER = "CREATE TABLE " + TABLE_NAME_FOLDER + "( "
-            + FOLDER_COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-            + FOLDER_COLUMN_NAME + " TEXT, "
-            + FOLDER_COLUMN_URL + " TEXT, "
-            + FOLDER_COLUMN_IMAGE + " TEXT, "
-            + FOLDER_COLUMN_FOLDER_NAME + " TEXT )";
-
-    //Create a FTS3 Virtual Table for fast searches
-    private static final String FTS_VIRTUAL_TABLE = "FTS";
-
-    private static final String DATABASE_CREATE =
-            "CREATE VIRTUAL TABLE " + FTS_VIRTUAL_TABLE + " USING fts3("
-                    + ALL_COLUMN_NAME
-                    + " UNIQUE (" + ALL_COLUMN_NAME + "));";
+    private static final String SQL_CREATE_TABLE_FOLDER = "CREATE TABLE " + TABLE_NAME_FOLDER + "( "
+        + FOLDER_COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+        + FOLDER_COLUMN_NAME + " TEXT, "
+        + FOLDER_COLUMN_URL + " TEXT, "
+        + FOLDER_COLUMN_IMAGE + " TEXT, "
+        + FOLDER_COLUMN_FOLDER_NAME + " TEXT )";
 
     private SiteListOpenHelper openHelper;
     private SQLiteDatabase database;
@@ -65,7 +56,6 @@ public class SiteListDatabaseHelper {
     public SiteListDatabaseHelper (Context context){
         openHelper = new SiteListOpenHelper(context);
         database = openHelper.getWritableDatabase();
-        //super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
     public SiteListOpenHelper getOpenHelper (Context context){
@@ -120,9 +110,80 @@ public class SiteListDatabaseHelper {
         database.insert(TABLE_NAME_FOLDER, null, contentValues);
     }
 
+    public boolean importDatabase(String data){
+
+        Log.i("Import data", data);
+
+        String[] str1 = data.split(SEP_I);
+        if(str1.length!=2){
+            Log.e("Import", "Fail check 1 " + SEP_I + str1.length);
+            return false;
+        }
+
+        String[] str2 = str1[0].split(SEP_II);
+        for(int i = 1; i<str2.length; i++){
+            String[] str3 = str2[i].split(SEP_III);
+            if(str3.length!=3){
+                Log.e("Import", "Fail check 2");
+                return false;
+            }
+            saveSite(str3[0], str3[1], str3[2]);
+        }
+
+        str2 = str1[1].split(SEP_II);
+        for(int i = 1; i<str2.length; i++){
+            String[] str3 = str2[i].split(SEP_III);
+            if(str3.length!=4){
+                Log.e("Import", "Fail check 3");
+                return false;
+            }
+            saveFolderSite(str3[0], str3[1], str3[2], str3[3]);
+        }
+
+        return true;
+    }
+
+    public String exportDatabase(){
+        StringBuilder export = new StringBuilder();
+
+        // home bookmarks
+        export.append("home");
+        openHelper.getWritableDatabase();
+        Cursor cursor = database.rawQuery(
+                "SELECT " + ALL_COLUMN_NAME + ", " + ALL_COLUMN_URL + ", " + ALL_COLUMN_IMAGE +
+                        " FROM " + TABLE_NAME_ALL,
+                null
+        );
+        cursor.moveToFirst();
+
+        while (!cursor.isAfterLast()){
+            export.append(SEP_II + cursor.getString(0) + SEP_III + cursor.getString(1)
+                    + SEP_III + cursor.getString(2));
+            cursor.moveToNext();
+        }
+        cursor.close();
+
+        // folder bookmarks
+        export.append(SEP_I + "folder");
+        cursor = database.rawQuery(
+                "SELECT " + FOLDER_COLUMN_NAME + ", " + FOLDER_COLUMN_URL + ", " + FOLDER_COLUMN_IMAGE + ", " +
+                        FOLDER_COLUMN_FOLDER_NAME + " FROM " + TABLE_NAME_FOLDER,
+                null
+        );
+        cursor.moveToFirst();
+
+        while (!cursor.isAfterLast()){
+            export.append(SEP_II + cursor.getString(0) + SEP_III + cursor.getString(1)
+                    + SEP_III + cursor.getString(2) + SEP_III + cursor.getString(3));
+            cursor.moveToNext();
+        }
+        cursor.close();
+
+        return export.toString();
+    }
+
     public Cursor getAllSites(){
         openHelper.getWritableDatabase();
-        //return database.rawQuery( "select * from " + TABLE_NAME_ALL,  null );
         return database.query(TABLE_NAME_ALL, null, null, null, null, null, ALL_COLUMN_IMAGE);
     }
 
@@ -207,20 +268,6 @@ public class SiteListDatabaseHelper {
           super(context, DATABASE_NAME, null, DATABASE_VERSION);
       }
 
-      /*private static final String FTS_TABLE_CREATE =
-              "CREATE VIRTUAL TABLE " + FTS_VIRTUAL_TABLE +
-                      " USING fts3 (" +
-                      FTS_COLUMN_NAME + ", " +
-                      FTS_COLUMN_URL + ", " +
-                      FTS_COLUMN_IMAGE + ")";*/
-
-      /**
-       * Called when the database is created for the first time. This is where the
-       * creation of tables and the initial population of the tables should happen.
-       *
-       * @param db The database.
-       */
-
       @Override
       public void onCreate(SQLiteDatabase db) {
           db.execSQL(SQL_CREATE_TABLE_ALL);
@@ -228,26 +275,6 @@ public class SiteListDatabaseHelper {
 
       }
 
-      /**
-       * Called when the database needs to be upgraded. The implementation
-       * should use this method to drop tables, add tables, or do anything else it
-       * needs to upgrade to the new schema version.
-       * <p/>
-       * <p>
-       * The SQLite ALTER TABLE documentation can be found
-       * <a href="http://sqlite.org/lang_altertable.html">here</a>. If you add new columns
-       * you can use ALTER TABLE to insert them into a live table. If you rename or remove columns
-       * you can use ALTER TABLE to rename the old table, then create the new table and then
-       * populate the new table with the contents of the old table.
-       * </p><p>
-       * This method executes within a transaction.  If an exception is thrown, all changes
-       * will automatically be rolled back.
-       * </p>
-       *
-       * @param db         The database.
-       * @param oldVersion The old database version.
-       * @param newVersion The new database version.
-       */
       @Override
       public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
           db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME_ALL);

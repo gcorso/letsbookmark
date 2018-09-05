@@ -54,6 +54,8 @@
     <string name="notnow">Not now</string>
 
     <string name="suggestions">Suggestions</string>
+    <string name="action_export">Export</string>
+    <string name="action_import">Import</string>
 
 
 </resources>

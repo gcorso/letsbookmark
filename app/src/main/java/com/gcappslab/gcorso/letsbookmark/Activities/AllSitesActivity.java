@@ -482,17 +482,11 @@ public class AllSitesActivity extends ActionBarActivity implements View.OnClickL
 
     public void onClick(View v) {
         if(v.getId() == R.id.newSourceButton){
-            //Intent addSiteIntent = new Intent (this, NewSiteActivity.class);
-            //addSiteIntent.putExtra(Const.IntentKeyConst.PARENT_ACTIVITY_EXTRA, "LIST_ACTIVITY");
-            //this.startActivityForResult(addSiteIntent, Const.IntentRequest.ADD_SITE_REQUEST);
             Intent provaSuggestions = new Intent(this, SuggestionsActivity.class);
             this.startActivity(provaSuggestions);
         }
     }
 
-    /* (non-Javadoc)
-     * @see android.app.Activity#onActivityResult(int, int, android.content.Intent)
-     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // TODO Auto-generated method stub
@@ -607,6 +601,83 @@ public class AllSitesActivity extends ActionBarActivity implements View.OnClickL
             });
 
             builder.show();
+
+        }
+
+        if(id == R.id.action_export){
+            final String export = databaseHelper.exportDatabase();
+
+            LayoutInflater inflater = this.getLayoutInflater();
+            View dialogView = inflater.inflate(R.layout.export_dialog, null);
+
+            final AlertDialog dialog = new AlertDialog.Builder(AllSitesActivity.this)
+                    .setView(dialogView)
+                    .show();
+
+            Button btShare = (Button) dialogView.findViewById(R.id.btShare);
+            btShare.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+
+                    Intent shareIntent = new Intent(Intent.ACTION_SEND);
+                    shareIntent.setData(Uri.parse("mailto:"));
+                    shareIntent.setType("text/plain");
+                    shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Let's Bookmark - export");
+                    shareIntent.putExtra(Intent.EXTRA_TEXT, export);
+
+                    try {
+                        startActivity(Intent.createChooser(shareIntent, "Share with..."));
+                        finish();
+                    } catch (android.content.ActivityNotFoundException ex) {
+                        Toast.makeText(AllSitesActivity.this, "There is no sharing client installed.", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+
+            Button btClose = (Button) dialogView.findViewById(R.id.btClose);
+            btClose.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+                }
+            });
+        }
+
+        if(id == R.id.action_import){
+            LayoutInflater inflater = this.getLayoutInflater();
+            final View dialogView = inflater.inflate(R.layout.import_dialog, null);
+
+            final AlertDialog dialog = new AlertDialog.Builder(AllSitesActivity.this)
+                    .setView(dialogView)
+                    .show();
+
+            Button btImport = (Button) dialogView.findViewById(R.id.btImport);
+            btImport.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+
+                    EditText etImport = dialogView.findViewById(R.id.etImport);
+                    String importStr = etImport.getText().toString();
+                    if(databaseHelper.importDatabase(importStr)){
+                        Toast.makeText(AllSitesActivity.this, "Import was successful", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(AllSitesActivity.this, "Import was unsuccessful, please consider checking the " +
+                                "correctness of the import data you provided.", Toast.LENGTH_LONG).show();
+                    }
+                    siteListAdapter.changeCursor(databaseHelper.getAllSites());
+                    listSite.setAdapter(siteListAdapter);
+                }
+            });
+
+            Button btClose = (Button) dialogView.findViewById(R.id.btClose);
+            btClose.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+                }
+            });
         }
 
         return super.onOptionsItemSelected(item);

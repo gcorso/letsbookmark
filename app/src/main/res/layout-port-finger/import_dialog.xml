@@ -17,9 +17,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:text="IMPORT"
+            android:gravity="center_horizontal"
+            android:text="Import"
             android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-            android:textSize="18sp"/>
+            android:textSize="24sp"/>
 
         <TextView
             android:id="@+id/tvMessage"
@@ -34,9 +35,11 @@
             android:id="@+id/etImport"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
             android:ems="10"
+            android:hint="Import data..."
             android:inputType="text|textMultiLine"
-            android:text="Import data..."/>
+            android:textSize="14sp"/>
 
     </LinearLayout>
 

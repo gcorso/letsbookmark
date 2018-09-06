@@ -18,18 +18,30 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:gravity="center_horizontal"
-            android:text="Export"
+            android:text="Create a new folder"
             android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-            android:textSize="24sp"/>
+            android:textSize="22sp"/>
 
         <TextView
             android:id="@+id/tvMessage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="10dp"
             android:lineSpacingExtra="3sp"
-            android:text="All your bookmarks are ready! Now you can share them with another device!"
+            android:text="Folder name:"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textSize="16sp"/>
+            android:textSize="18sp"/>
+
+        <EditText
+            android:id="@+id/etFolder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Folder name..."
+            android:inputType="text|textMultiLine"
+            android:textSize="18sp"/>
 
     </LinearLayout>
 
@@ -51,19 +63,19 @@
             android:layout_height="45dp"
             android:layout_weight="0.50"
             android:background="#ffffffff"
-            android:text="CLOSE"
+            android:text="CANCEL"
             android:textAppearance="@style/TextAppearance.AppCompat.Widget.Button"
             android:textColor="#14aa01"
             android:textSize="16sp"/>
 
         <Button
-            android:id="@+id/btShare"
+            android:id="@+id/btCreate"
             android:layout_width="wrap_content"
             android:layout_height="45dp"
             android:layout_weight="0.50"
             android:background="#14aa01"
             android:elegantTextHeight="false"
-            android:text="SHARE"
+            android:text="CREATE"
             android:textAppearance="@style/TextAppearance.AppCompat.Widget.Button"
             android:textColor="@android:color/white"
             android:textSize="16sp"/>

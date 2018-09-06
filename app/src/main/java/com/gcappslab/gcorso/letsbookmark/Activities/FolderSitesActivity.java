@@ -7,11 +7,13 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.text.Html;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -25,16 +27,16 @@ import com.gcappslab.gcorso.letsbookmark.SiteListDatabaseHelper;
 
 import java.util.List;
 
-public class FolderSitesActivity extends ActionBarActivity implements View.OnClickListener{
+import static com.gcappslab.gcorso.letsbookmark.Const.getImageUrl;
 
-    private Button btAddSite;
+public class FolderSitesActivity extends ActionBarActivity {
+
     private ListView listSite;
 
     private SiteFolderAdapter siteFolderAdapter;
     private SiteBaseAdapter siteAdapter;
-    private SiteListAdapter siteListAdapter;
-
     private SiteListDatabaseHelper databaseHelper;
+    private String folderName;
 
     private List<Site> siteList;
 
@@ -56,7 +58,7 @@ public class FolderSitesActivity extends ActionBarActivity implements View.OnCli
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_folder_sites);
 
-        final String folderName = getIntent().getExtras().getString("folderName");
+        folderName = getIntent().getExtras().getString("folderName");
 
         String nameTranf = "<medium>" + folderName + "</medium>";
 
@@ -64,18 +66,6 @@ public class FolderSitesActivity extends ActionBarActivity implements View.OnCli
         actionBar.setTitle(Html.fromHtml(nameTranf));
 
         this.listSite = (ListView) this.findViewById(R.id.lv_all_sites);
-        this.btAddSite = (Button) this.findViewById(R.id.newSourceButton);
-        this.btAddSite.setOnClickListener((View.OnClickListener) this);
-
-        Button btnHome = (Button) findViewById(R.id.newSourceButton);
-        btnHome.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View arg0) {
-                Intent addSiteIntent = new Intent (FolderSitesActivity.this, NewSiteActivity.class);
-                addSiteIntent.putExtra(Const.IntentKeyConst.PARENT_ACTIVITY_EXTRA, "LIST_ACTIVITY");
-                FolderSitesActivity.this.startActivityForResult(addSiteIntent, Const.IntentRequest.ADD_SITE_REQUEST);
-            }
-        });
 
         databaseHelper = new SiteListDatabaseHelper(this);
         siteFolderAdapter = new SiteFolderAdapter(this,databaseHelper.getFolderSites());
@@ -172,12 +162,7 @@ public class FolderSitesActivity extends ActionBarActivity implements View.OnCli
                             // Condividere il sito
 
                             Site varSite = (Site) siteAdapter.getItem(position);
-
-                            String name;
-                            name = varSite.getName();
-
-                            String URL;
-                            URL = varSite.getURL();
+                            String URL = varSite.getURL();
 
                             Intent shareIntent = new Intent(Intent.ACTION_SEND);
                             shareIntent.setData(Uri.parse("mailto:"));
@@ -227,7 +212,6 @@ public class FolderSitesActivity extends ActionBarActivity implements View.OnCli
 
                 builder.create().show();
 
-
                 return true;
             }
 
@@ -252,11 +236,7 @@ public class FolderSitesActivity extends ActionBarActivity implements View.OnCli
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 Site varSite = (Site) siteAdapter.getItem(position);
-                String image;
-                image = varSite.getPhotoRes();
-
-                String URL;
-                URL = varSite.getURL();
+                String URL = varSite.getURL();
 
                 Intent openBookmark = new Intent(Intent.ACTION_VIEW, Uri.parse(URL));
                 startActivity(openBookmark);
@@ -265,39 +245,6 @@ public class FolderSitesActivity extends ActionBarActivity implements View.OnCli
 
 
         });
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        // TODO Auto-generated method stub
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == Const.IntentRequest.ADD_SITE_REQUEST){
-
-            if (data != null){
-                if (data.hasExtra(Const.IntentKeyConst.SITE_EXTRA)) {
-                    Site tmpSite = (Site) data.getSerializableExtra(Const.IntentKeyConst.SITE_EXTRA);
-
-                    //per aggiungere il sito al database
-                    String name = tmpSite.getName();
-                    String url = tmpSite.getURL();
-                    String image = tmpSite.getPhotoRes();
-                    final String folderName = getIntent().getExtras().getString("folderName");
-
-                    databaseHelper = new SiteListDatabaseHelper(this);
-                    databaseHelper.saveFolderSite(name, url, image, folderName);
-                    siteFolderAdapter = new SiteFolderAdapter(this,databaseHelper.getFolderSites());
-                    siteList = siteFolderAdapter.getAllSitesOfFolder(folderName);
-                    siteAdapter = new SiteBaseAdapter();
-                    siteAdapter.setList(siteList);
-                    listSite.setAdapter(siteAdapter);
-
-                    Toast.makeText(FolderSitesActivity.this, "Bookmark added", Toast.LENGTH_SHORT).show();
-                }
-            }
-        }
-
-
     }
 
 
@@ -323,32 +270,62 @@ public class FolderSitesActivity extends ActionBarActivity implements View.OnCli
         }
 
         if (id == R.id.action_new) {
-            Intent addSiteIntent = new Intent(this, NewSiteActivity.class);
-            addSiteIntent.putExtra(Const.IntentKeyConst.PARENT_ACTIVITY_EXTRA, "LIST_ACTIVITY");
-            this.startActivityForResult(addSiteIntent, Const.IntentRequest.ADD_SITE_REQUEST);
+            createBookmark();
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-    /**
-     * Called when a view has been clicked.
-     *
-     * @param v The view that was clicked.
-     */
-    @Override
-    public void onClick(View v) {
-        Intent addSiteIntent = new Intent (this, NewSiteActivity.class);
-        addSiteIntent.putExtra(Const.IntentKeyConst.PARENT_ACTIVITY_EXTRA, "LIST_ACTIVITY");
-        this.startActivityForResult(addSiteIntent, Const.IntentRequest.ADD_SITE_REQUEST);
-    }
 
-    /**
-     * Called when a view has been clicked.
-     *
-     * @param v The view that was clicked.
-     */
+    void createBookmark(){
+        LayoutInflater inflater = this.getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.new_bookmark_dialog, null);
+
+        final AlertDialog dialog = new AlertDialog.Builder(FolderSitesActivity.this)
+                .setView(dialogView)
+                .show();
+
+        final EditText edSiteName = (EditText) dialogView.findViewById(R.id.etName);
+        final EditText edURL = (EditText) dialogView.findViewById(R.id.etUrl);
+
+        Button btCreate = (Button) dialogView.findViewById(R.id.btCreate);
+        btCreate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String URL = edURL.getText().toString();
+
+                if (URL.startsWith("http://") || URL.startsWith("https://")){
+                    dialog.dismiss();
+
+                    String name = edSiteName.getText().toString();
+                    String image = getImageUrl(URL);
+
+                    databaseHelper.saveFolderSite(name, URL, image, folderName);
+                    siteFolderAdapter = new SiteFolderAdapter(FolderSitesActivity.this,databaseHelper.getFolderSites());
+                    siteList = siteFolderAdapter.getAllSitesOfFolder(folderName);
+                    siteAdapter = new SiteBaseAdapter();
+                    siteAdapter.setList(siteList);
+                    listSite.setAdapter(siteAdapter);
+
+                } else {
+
+                    Toast.makeText(FolderSitesActivity.this, "Invalid URL, the website " +
+                            "location should start with http:// or https://.", Toast.LENGTH_LONG).show();
+
+                }
+            }
+        });
+
+        Button btClose = (Button) dialogView.findViewById(R.id.btClose);
+        btClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+    }
 
 
 }

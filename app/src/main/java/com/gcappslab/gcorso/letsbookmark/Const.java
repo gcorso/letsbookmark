@@ -1,5 +1,8 @@
 package com.gcappslab.gcorso.letsbookmark;
 
+import java.net.URI;
+import java.net.URISyntaxException;
+
 /**
  * Created by Alessandro.c on 28/06/2015.
  */
@@ -20,5 +23,24 @@ public final class Const {
     public static final String SEP_I = "<<<--->>>";
     public static final String SEP_II = "<<-->>";
     public static final String SEP_III = "<->";
+
+    public static String getDomainUrl(String url) throws URISyntaxException {
+        URI uri = new URI(url);
+        String domain = uri.getHost();
+        return domain;
+    }
+
+    public static String getImageUrl(String url)  {
+        String image;
+
+        try {
+            String domainUrl = getDomainUrl(url);
+            image = "http://" + domainUrl + "/favicon.ico";
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+            image = "nothing";
+        }
+        return image;
+    }
 
 }

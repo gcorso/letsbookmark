@@ -35,17 +35,6 @@
             android:value="@integer/google_play_services_version" />
 
         <activity
-            android:name=".Activities.NewSiteActivity"
-            android:label="@string/title_activity_new_source"
-            android:parentActivityName=".Activities.AllSitesActivity"
-            android:theme="@style/AppTheme">
-
-            <!-- Parent activity meta-data to support API level 7+ -->
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.gcappslab.gcorso.letsbookmark.Activities.AllSitesActivity" />
-        </activity>
-        <activity
             android:name=".Activities.SettingsActivity"
             android:label="@string/title_activity_settings"
             android:parentActivityName=".Activities.AllSitesActivity">
@@ -77,16 +66,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.gcappslab.gcorso.letsbookmark.Activities.AllSitesActivity" />
         </activity>
-        <activity
-            android:name=".Activities.NewFolderActivity"
-            android:label="@string/title_activity_add_folder"
-            android:parentActivityName=".Activities.AllSitesActivity">
 
-            <!-- Parent activity meta-data to support API level 7+ -->
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.gcappslab.gcorso.letsbookmark.Activities.AllSitesActivity" />
-        </activity>
         <activity
             android:name=".Activities.FolderSitesActivity"
             android:label="@string/title_activity_folder_sites"

@@ -39,6 +39,7 @@
             android:ems="10"
             android:hint="Import data..."
             android:inputType="text|textMultiLine"
+            android:maxHeight="150dp"
             android:textSize="14sp"/>
 
     </LinearLayout>
